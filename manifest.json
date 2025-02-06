@@ -20,13 +20,13 @@
   ],
   "screenshots": [
     {
-      "src": "screenshot-wide.png",
+      "src": "images/screenshot-wide.png",
       "sizes": "1600x800",
       "type": "image/png",
       "form_factor": "wide"
     },
      {
-      "src": "screenshot-narrow.png",
+      "src": "images/screenshot-narrow.png",
       "sizes": "800x1600",
       "type": "image/png",
       "form_factor": "narrow"
