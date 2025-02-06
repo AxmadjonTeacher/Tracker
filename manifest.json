@@ -24,6 +24,12 @@
       "sizes": "1600x800",
       "type": "image/png",
       "form_factor": "wide"
+    },
+     {
+      "src": "/screenshots/screenshot-narrow.png",
+      "sizes": "800x1600",
+      "type": "image/png",
+      "form_factor": "narrow"
     }
   ]
 }
