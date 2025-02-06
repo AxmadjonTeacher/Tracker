@@ -1,7 +1,7 @@
 // service-worker.js (correct filename and cache list)
 const CACHE_NAME = "workout-tracker-v1";
 const urlsToCache = [
-  "/",
+  "/Tracker/",
   "index.html",
   "manifest.json",
   // Removed style.css (not used)
