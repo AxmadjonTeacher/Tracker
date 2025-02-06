@@ -2,7 +2,7 @@
   "name": "Workout Tracker",
   "short_name": "Workout",
   "description": "A workout tracker app to log exercises and track progress.",
-  "start_url": "/",
+  "start_url": "/Tracker/",
   "display": "standalone",
   "background_color": "#f4f4f4",
   "theme_color": "#4CAF50",
