@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Tracker</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
+        .tracker {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .workout-day {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 15px;
+            margin-bottom: 10px;
+            transition: transform 0.3s;
+        }
+        .workout-day:hover {
+            transform: scale(1.02);
+        }
+        .exercise {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 5px 0;
+            font-size: 14px;
+            background: white;
+        }
+        .done {
+            background-color: #90ee90;
+        }
+        .undone {
+            background-color: #ffcccb;
+        }
+        .timer-container {
+            margin: 20px 0;
+            padding: 15px;
+            background: #e8f4ff;
+            border-radius: 8px;
+        }
+        .timer {
+            font-size: 24px;
+            margin: 10px 0;
+        }
+        button {
+            padding: 8px 16px;
+            margin: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .timer-btn {
+            background: #4CAF50;
+            color: white;
+        }
+        .reset-btn {
+            background: #f44336;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="tracker">
+        <h1>Workout Tracker</h1>
+        
+        <div class="timer-container">
+            <div class="timer" id="timer">00:00</div>
+            <button onclick="setTimer(30)">30s</button>
+            <button onclick="setTimer(60)">60s</button>
+            <button onclick="setTimer(180)">3 min</button>
+            <button onclick="setTimer(300)">5 min</button>
+            <button class="timer-btn" onclick="startTimer()">Start</button>
+            <button class="timer-btn" onclick="pauseTimer()">Pause</button>
+            <button class="reset-btn" onclick="resetTimer()">Reset</button>
+        </div>
+
+        <h2>Workout Plan</h2>
+        <div id="workout-list"></div>
+        <button class="reset-btn" onclick="resetTracker()">Reset All Progress</button>
+    </div>
+
+    <script>
+        const workouts = [
+            { day: "Monday - Full Body Strength", exercises: ["Squats - 4x12", "Push-ups - 3x15", "Bulgarian split squats - 3x10 each leg", "Dips - 3x12", "Plank - 3x45s"] },
+            { day: "Tuesday - Cardio & Core", exercises: ["HIIT 20-30 min", "Jump rope - 3x1 min", "Mountain climbers - 3x30s", "Russian twists - 3x15 each side", "Hanging leg raises - 3x12"] },
+            { day: "Wednesday - Upper Body", exercises: ["Pike push-ups - 3x12", "Push-ups - 3x15", "Diamond push-ups - 3x12", "Wall handstand hold - 3x30s", "Dips - 3x12"] },
+            { day: "Thursday - Recovery", exercises: ["Walk 30-40 min", "Mobility work"] },
+            { day: "Friday - Lower Body & Core", exercises: ["Squats - 4x15", "Calf raises - 3x20", "Glute bridges - 3x12", "Jump squats - 3x12", "Plank - 3x1 min"] },
+            { day: "Saturday - HIIT & Conditioning", exercises: ["Burpees - 3x10", "High knees - 3x30s", "Jump lunges - 3x12", "Push-ups - 3x15", "Sprint in place - 3x30s"] },
+            { day: "Sunday - Rest & Recovery", exercises: ["Stretching", "Walking"] }
+        ];
+
+        function loadWorkouts() {
+            const list = document.getElementById("workout-list");
+            list.innerHTML = "";
+            workouts.forEach(workout => {
+                const dayDiv = document.createElement("div");
+                dayDiv.className = "workout-day";
+                const title = document.createElement("h3");
+                title.textContent = workout.day;
+                dayDiv.appendChild(title);
+                workout.exercises.forEach(exercise => {
+                    const exDiv = document.createElement("div");
+                    exDiv.className = "exercise undone";
+                    exDiv.innerHTML = `${exercise} <button onclick="toggleExercise(this)">❌</button>`;
+                    dayDiv.appendChild(exDiv);
+                });
+                list.appendChild(dayDiv);
+            });
+        }
+
+        function toggleExercise(button) {
+            const exerciseDiv = button.parentElement;
+            if (exerciseDiv.classList.contains("undone")) {
+                exerciseDiv.classList.remove("undone");
+                exerciseDiv.classList.add("done");
+                button.innerHTML = "✅";
+            } else {
+                exerciseDiv.classList.remove("done");
+                exerciseDiv.classList.add("undone");
+                button.innerHTML = "❌";
+            }
+        }
+
+        let timer, timeLeft;
+        function setTimer(seconds) {
+            timeLeft = seconds;
+            document.getElementById("timer").textContent = `${seconds}s`;
+        }
+        function startTimer() {
+            clearInterval(timer);
+            timer = setInterval(() => {
+                if (timeLeft > 0) {
+                    document.getElementById("timer").textContent = `${timeLeft--}s`;
+                } else {
+                    alert("Time's up!");
+                    clearInterval(timer);
+                }
+            }, 1000);
+        }
+        function pauseTimer() { clearInterval(timer); }
+        function resetTimer() { clearInterval(timer); document.getElementById("timer").textContent = "00:00"; }
+        function resetTracker() { loadWorkouts(); }
+        loadWorkouts();
+    </script>
+
+    <script src="service-worker.js"></script>
+</body>
+</html>
