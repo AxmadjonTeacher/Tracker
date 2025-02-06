@@ -20,13 +20,13 @@
   ],
   "screenshots": [
     {
-      "src": "https://axmadjonteacher.github.io/screenshots/screenshot-wide.png",
+      "src": "screenshot-wide.png",
       "sizes": "1600x800",
       "type": "image/png",
       "form_factor": "wide"
     },
      {
-      "src": "https://axmadjonteacher.github.io/screenshots/screenshot-narrow.png",
+      "src": "screenshot-narrow.png",
       "sizes": "800x1600",
       "type": "image/png",
       "form_factor": "narrow"
