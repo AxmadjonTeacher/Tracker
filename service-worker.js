@@ -1,18 +1,15 @@
-// service-worker.js (correct filename and cache list)
 const CACHE_NAME = "workout-tracker-v1";
 const urlsToCache = [
   "/Tracker/",
   "index.html",
   "manifest.json",
-  // Removed style.css (not used)
-  "icon-192.png",    // Changed from icon-192x192.png
-  "icon-512.png"     // Changed from icon-512x512.png
-],
-  "screenshot-narrow.png",    
-  "screenshot-wide.png"     
+  "icon-192.png",  // Ensure these files exist in the correct path
+  "icon-512.png",
+  "screenshot-narrow.png",
+  "screenshot-wide.png"
 ];
 
-// Rest of the service worker code remains the same
+// Install Service Worker and Cache Files
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -22,4 +19,24 @@ self.addEventListener("install", (event) => {
   );
 });
 
-// ... keep the rest of the service worker code unchanged
+// Activate Service Worker and Remove Old Caches
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames
+          .filter((cacheName) => cacheName !== CACHE_NAME)
+          .map((cacheName) => caches.delete(cacheName))
+      );
+    })
+  );
+});
+
+// Fetch Request - Serve Cached Files First, Then Network
+self.addEventListener("fetch", (event) => {
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      return response || fetch(event.request);
+    })
+  );
+});
