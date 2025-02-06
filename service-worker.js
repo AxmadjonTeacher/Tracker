@@ -7,6 +7,9 @@ const urlsToCache = [
   // Removed style.css (not used)
   "icon-192.png",    // Changed from icon-192x192.png
   "icon-512.png"     // Changed from icon-512x512.png
+],
+  "screenshot-narrow.png",    
+  "screenshot-wide.png"     
 ];
 
 // Rest of the service worker code remains the same
